@@ -24,21 +24,12 @@ const AGENTS: &[&str] = &[
 ];
 
 const PATH: &[&str] = &[
-         "/profiles/minecraft",
-        "/profiles/minecraft/",
-        "/profiles/minecraft/.",
-        "/profiles/minecraft?foo=bar",
-        "/profiles/%2e/minecraft",
-        "/%2e/profiles/minecraft",
-        "/profiles/./minecraft",
-        "/profiles/minecraft?debug=true",
-        "/profiles/minecraft?cb=123456",
-        "/profiles/minecraft?redirect=/admin",
-        "/profiles/minecraft?_=timestamp",
-        "//profiles/minecraft",
-        "/profiles/minecraft\\",
+    "/profiles/minecraft?foo=bar",
+    "/profiles/minecraft?cb=123456",
+    "/profiles/minecraft?redirect=/admin",
+    "/profiles/minecraft?_=timestamp",
+    "/profiles/minecraft?debug=true",
     ];
-
 
 
 #[derive(Debug, Deserialize,Clone)]
@@ -56,13 +47,7 @@ pub async fn fetch_batch(
 
     let user_agent = AGENTS.choose(&mut rand::rng()).unwrap();
     let mut rng = ChaCha12Rng::from_rng(&mut rand::rng());
-    let url1 = format!("https://api.minecraftservices.com{}", PATH.choose(&mut rng).unwrap());
-    let url2 = format!("https://api.mojang.com{}", PATH.choose(&mut rng).unwrap());
-    let url = if rand::random() {
-        url1
-    } else {
-        url2
-    };
+    let url = format!("https://api.minecraftservices.com{}", PATH.choose(&mut rng).unwrap());
 
 
     let body = json!(usernames);
